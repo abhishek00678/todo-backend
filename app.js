@@ -6,14 +6,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 export const app = express();
+config({
+  path: "./database/config.env",
+});
 
-// Body parsing middleware
 app.use(express.json());
 app.use(cookieParser());
-// User routes
-app.use("/users", userRouter);
-app.use("/tasks", taskRouter);
-
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
@@ -22,7 +20,5 @@ app.use(
   })
 );
 
-// Load environment variables
-config({
-  path: "./database/config.env",
-});
+app.use("/users", userRouter);
+app.use("/tasks", taskRouter);
